@@ -328,7 +328,7 @@ else:
 </div>
 """, unsafe_allow_html=True)
 
-
+st.markdown("<div style='margin-bottom: 30px;'></div>", unsafe_allow_html=True)
 
 # ---------- Download ----------
 csv = matched_df.to_csv(index=False).encode('utf-8')
