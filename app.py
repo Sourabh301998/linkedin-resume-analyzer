@@ -22,10 +22,20 @@ body, .stApp {
     background-color: white !important;
     color: #003366 !important;
 }
+
+/* Header text fix */
+h1, h2, h3, h4, h5 {
+    color: #003366 !important;
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* Block container padding */
 .block-container {
     background-color: white !important;
     padding: 2rem 1rem;
 }
+
+/* Top Navigation */
 .topnav {
     position: fixed;
     top: 0;
@@ -47,43 +57,8 @@ body, .stApp {
 .topnav a:hover {
     background-color: #005999;
 }
-.stApp {
-    margin-top: 60px !important;
-}
-.header-container {
-    background-color: #f8f9fa;
-    padding: 20px;
-    border-radius: 12px;
-    margin-bottom: 30px;
-    text-align: center;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-}
-.glow-title {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 40px;
-    color: #003366;
-    margin: 0;
-}
-.upload-label, .checkbox-label {
-    font-size: 18px;
-    font-weight: 600;
-    color: #003366 !important;
-    font-family: 'Montserrat', sans-serif;
-    margin-bottom: 8px;
-    display: block;
-}
 
-/* ✅ FIX invisible default markdown/text */
-.stMarkdown, .stText, .stTextLabel, .stSubheader, .css-1v0mbdj, .css-10trblm {
-    color: #003366 !important;
-}
-
-/* ✅ FIX checkbox text */
-.stCheckbox > div, .checkbox-label {
-    color: #003366 !important;
-}
-
-/* ✅ Download Button */
+/* Download Button */
 div.stDownloadButton > button {
     background-color: #0072b1;
     color: white;
@@ -97,7 +72,7 @@ div.stDownloadButton > button:hover {
     background-color: #005999;
 }
 
-/* ✅ Skill box styling */
+/* Skill box */
 .custom-skill-box {
     background-color: #f1f5f9;
     padding: 15px;
@@ -108,8 +83,17 @@ div.stDownloadButton > button:hover {
     color: #003366;
 }
 
-/* ✅ Footer */
-footer {visibility: hidden;}
+/* Checkbox label fix */
+.upload-label, .checkbox-label {
+    font-size: 18px;
+    font-weight: 600;
+    color: #003366 !important;
+    font-family: 'Montserrat', sans-serif;
+    margin-bottom: 8px;
+    display: block;
+}
+
+/* Footer */
 .custom-footer {
     position: relative;
     bottom: 0px;
@@ -133,12 +117,6 @@ footer {visibility: hidden;}
 .custom-footer a:hover {
     color: #00BFFF;
     text-decoration: underline;
-}
-
-/* Chart Title Fix */
-.stMarkdown h3, .stMarkdown h2, .stMarkdown h4 {
-    color: #003366 !important;
-    font-family: 'Montserrat', sans-serif;
 }
 </style>
 """, unsafe_allow_html=True)
@@ -249,11 +227,11 @@ st.markdown(f'<div class="custom-skill-box">{", ".join(skills)}</div>', unsafe_a
 
 # ---------- Job Matches ----------
 st.markdown('<a name="matches"></a>', unsafe_allow_html=True)
-st.markdown('<h2 style="color:#003366;">💼 Top Matching Jobs</h2>', unsafe_allow_html=True)
+st.markdown('<h2 style="color:#0e1117;">💼 Top Matching Jobs</h2>', unsafe_allow_html=True)
 
 if "Match (%)" in matched_df.columns:
     for index, row in matched_df.head(5).iterrows():
-        st.markdown(f'<h4 style="color:#003366;">🔹 {row["Job Title"]} ({row["Match (%)"]}%)</h4>', unsafe_allow_html=True)
+        st.markdown(f'<h4 style="color:#0e1117;">🔹 {row["Job Title"]} ({row["Match (%)"]}%)</h4>', unsafe_allow_html=True)
         st.markdown(f'<div style="color:#000000;">{row["Details"]}</div>', unsafe_allow_html=True)
 
         if use_openai:
