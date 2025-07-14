@@ -322,7 +322,12 @@ if "Match (%)" in matched_df.columns:
     ax5.set_xticklabels(skill_counts.keys(), rotation=30)
     st.pyplot(fig5)
 else:
-    st.info("ℹ️ Matching data not available to generate visualizations.")
+    st.markdown("""
+<div style="background-color:#e8f4fd; padding: 15px; border-left: 6px solid #8ecae6; border-radius: 6px; color: #005082; font-family: 'Montserrat', sans-serif;">
+ℹ️ <strong>Matching data not available to generate visualizations.</strong>
+</div>
+""", unsafe_allow_html=True)
+
 
 
 # ---------- Download ----------
