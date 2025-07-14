@@ -42,12 +42,12 @@ h1, h2, h3, h4, h5 {
     width: 100%;
     background-color: #003366;
     overflow: hidden;
-    z-index: 999;
+    z-index: 9999;
 }
 .topnav a {
     float: left;
     display: block;
-    color: #ffffff;
+    color: white;
     text-align: center;
     padding: 14px 24px;
     text-decoration: none;
@@ -71,7 +71,15 @@ div.stDownloadButton > button {
 div.stDownloadButton > button:hover {
     background-color: #005999;
 }
-
+.header-container {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 12px;
+    margin-top: 60px;  /* important */
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}           
 /* Skill box */
 .custom-skill-box {
     background-color: #f1f5f9;
@@ -121,6 +129,29 @@ div.stDownloadButton > button:hover {
 </style>
 """, unsafe_allow_html=True)
 
+# ---------- Header ----------
+st.markdown("""
+<div class="header-container">
+    <h1 class="glow-title">LinkedIn Resume Analyzer</h1>
+</div>
+""", unsafe_allow_html=True)
+
+# ---------- Top Navigation ----------
+st.markdown("""
+<div class="topnav">
+    <a href="#upload">📄 Upload Resume</a>
+    <a href="#insights">📊 AI Insights</a>
+    <a href="#matches">💼 Job Matches</a>
+    <a href="#visualizations">📈 Visualizations</a>
+    <a href="#download">📥 Download Report</a>
+    <a href="#footer">⚙️ About</a>
+</div>
+""", unsafe_allow_html=True)
+
+# ---------- Header Image ----------
+if os.path.exists("assets/header_image.png"):
+    header_image = Image.open("assets/header_image.png")
+    st.image(header_image, use_column_width=True, caption="AI-Powered Resume Analysis")
 
 
 # ---------- Lottie ----------
