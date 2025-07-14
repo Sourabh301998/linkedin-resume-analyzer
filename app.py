@@ -33,37 +33,7 @@ h1, h2, h3, h4, h5 {
 .block-container {
     background-color: white !important;
     padding: 2rem 1rem;
-}
-
-/* Top Navigation - Responsive Fix */
-.topnav {
-    display: flex;
-    flex-wrap: wrap;             /* ✅ Wraps items to next line if space is less */
-    justify-content: center;     /* ✅ Center aligned */
-    background-color: #003366;
-    padding: 10px 0;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 9999;
-}
-
-.topnav a {
-    color: white;
-    text-align: center;
-    padding: 12px 20px;
-    text-decoration: none;
-    font-size: 16px;
-    font-family: 'Montserrat', sans-serif;
-}
-
-.topnav a:hover {
-    background-color: #005999;
-}
-@media (max-width: 768px) {
-    .topnav a {
-        font-size: 14px;
-        padding: 10px 14px;                        
+                     
 }
 
 /* Download Button */
@@ -151,17 +121,6 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-# ---------- Top Navigation ----------
-st.markdown("""
-<div class="topnav">
-    <a href="#upload">📄 Upload Resume</a>
-    <a href="#insights">📊 AI Insights</a>
-    <a href="#matches">💼 Job Matches</a>
-    <a href="#visualizations">📈 Visualizations</a>
-    <a href="#download">📥 Download Report</a>
-    <a href="#footer">⚙️ About</a>
-</div>
-""", unsafe_allow_html=True)
 
 # ---------- Header Image ----------
 if os.path.exists("assets/header_image.png"):
