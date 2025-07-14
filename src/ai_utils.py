@@ -1,10 +1,8 @@
+import streamlit as st
 from openai import OpenAI
-import os
-from dotenv import load_dotenv
 
-# Load your OpenAI API key from .env file
-load_dotenv()
-client = OpenAI()  # Automatically uses OPENAI_API_KEY from env
+# ✅ Load OpenAI key from Streamlit secrets
+client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
 
 # 1. Resume Summary
 def generate_resume_summary(resume_text):
