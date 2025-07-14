@@ -227,7 +227,12 @@ if uploaded_resume and uploaded_jobs:
 if analysis_done:
     st.success("✅ Resume analysis complete!")
 else:
-    st.warning("⚠️ Please upload both a resume and a job dataset to start the analysis.")
+    st.markdown("""
+<div style="background-color:#fff3cd; padding: 15px; border-left: 6px solid #ffecb5; border-radius: 6px; color: #856404; font-family: 'Montserrat', sans-serif;">
+⚠️ <strong>Please upload both a resume and a job dataset to start the analysis.</strong>
+</div>
+""", unsafe_allow_html=True)
+
 
 # ---------- Insights ----------
 if analysis_done and resume_text:
