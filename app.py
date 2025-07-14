@@ -242,59 +242,67 @@ st.markdown(f'<div class="custom-skill-box">{", ".join(skills)}</div>', unsafe_a
 
 # ---------- Job Matches ----------
 st.markdown('<a name="matches"></a>', unsafe_allow_html=True)
-st.subheader("💼 Top Matching Jobs")
-for index, row in matched_df.head(5).iterrows():
-    st.markdown(f"### 🔹 {row['Job Title']} ({row['Match (%)']}%)")
-    st.write(row['Details'])
+st.markdown('<h2 style="color:#003366;">💼 Top Matching Jobs</h2>', unsafe_allow_html=True)
 
-    if use_openai:
-        with st.expander("🤖 AI Feedback: Am I a Good Fit?"):
-            try:
-                feedback = evaluate_job_fit(resume_text, row['Details'])
-                st.write(feedback)
-            except OpenAIError as e:
-                st.error(f"❌ Fit evaluation failed: {str(e)}")
+if "Match (%)" in matched_df.columns:
+    for index, row in matched_df.head(5).iterrows():
+        st.markdown(f'<h4 style="color:#003366;">🔹 {row["Job Title"]} ({row["Match (%)"]}%)</h4>', unsafe_allow_html=True)
+        st.markdown(f'<div style="color:#000000;">{row["Details"]}</div>', unsafe_allow_html=True)
+
+        if use_openai:
+            with st.expander("🤖 AI Feedback: Am I a Good Fit?"):
+                try:
+                    feedback = evaluate_job_fit(resume_text, row['Details'])
+                    st.write(feedback)
+                except OpenAIError as e:
+                    st.error(f"❌ Fit evaluation failed: {str(e)}")
+
 
 # ---------- Visualizations ----------
-st.subheader("📊 Match Score Visualization")
-top_jobs = matched_df.sort_values(by="Match (%)", ascending=False).head(5)
-fig, ax = plt.subplots(figsize=(2, 2))
-ax.barh(top_jobs["Job Title"], top_jobs["Match (%)"], color="#0072b1")
-ax.set_xlabel("Match Percentage")
-ax.set_title("Top 5 Matching Job Roles")
-ax.invert_yaxis()
-st.pyplot(fig)
+if "Match (%)" in matched_df.columns:
+    st.subheader("📊 Match Score Visualization")
+    top_jobs = matched_df.sort_values(by="Match (%)", ascending=False).head(5)
 
-st.subheader("📈 Match Score Distribution")
-fig2, ax2 = plt.subplots(figsize=(2, 2))
-ax2.hist(matched_df["Match (%)"], bins=10, color="#005999", edgecolor='black')
-ax2.set_xlabel("Match %")
-ax2.set_ylabel("Number of Jobs")
-ax2.set_title("Distribution of Match Scores")
-st.pyplot(fig2)
+    fig, ax = plt.subplots(figsize=(4, 3))
+    ax.barh(top_jobs["Job Title"], top_jobs["Match (%)"], color="#0072b1")
+    ax.set_xlabel("Match Percentage")
+    ax.set_title("Top 5 Matching Job Roles")
+    ax.invert_yaxis()
+    st.pyplot(fig)
 
-st.subheader("📌 Match Share by Job Title")
-fig3, ax3 = plt.subplots(figsize=(2, 2))
-ax3.pie(top_jobs["Match (%)"], labels=top_jobs["Job Title"], autopct="%1.1f%%", startangle=140, colors=plt.cm.Paired.colors)
-ax3.axis('equal')
-st.pyplot(fig3)
+    st.subheader("📈 Match Score Distribution")
+    fig2, ax2 = plt.subplots(figsize=(4, 3))
+    ax2.hist(matched_df["Match (%)"], bins=10, color="#005999", edgecolor='black')
+    ax2.set_xlabel("Match %")
+    ax2.set_ylabel("Number of Jobs")
+    ax2.set_title("Distribution of Match Scores")
+    st.pyplot(fig2)
 
-st.subheader("🔤 Word Cloud of Job Descriptions")
-all_descriptions = " ".join(matched_df["Details"].astype(str).tolist())
-wordcloud = WordCloud(width=400, height=400, background_color="white").generate(all_descriptions)
-fig4, ax4 = plt.subplots(figsize=(2, 2))
-ax4.imshow(wordcloud, interpolation='bilinear')
-ax4.axis("off")
-st.pyplot(fig4)
+    st.subheader("📌 Match Share by Job Title")
+    fig3, ax3 = plt.subplots(figsize=(4, 3))
+    ax3.pie(top_jobs["Match (%)"], labels=top_jobs["Job Title"], autopct="%1.1f%%", startangle=140, colors=plt.cm.Paired.colors)
+    ax3.axis('equal')
+    st.pyplot(fig3)
 
-st.subheader("📊 Extracted Skill Frequency")
-skill_counts = Counter(skills)
-fig5, ax5 = plt.subplots(figsize=(2, 2))
-ax5.bar(skill_counts.keys(), skill_counts.values(), color="#ff6600")
-ax5.set_ylabel("Frequency")
-ax5.set_title("Skills Extracted from Resume")
-ax5.set_xticklabels(skill_counts.keys(), rotation=30)
-st.pyplot(fig5)
+    st.subheader("🔤 Word Cloud of Job Descriptions")
+    all_descriptions = " ".join(matched_df["Details"].astype(str).tolist())
+    wordcloud = WordCloud(width=400, height=400, background_color="white").generate(all_descriptions)
+    fig4, ax4 = plt.subplots(figsize=(4, 3))
+    ax4.imshow(wordcloud, interpolation='bilinear')
+    ax4.axis("off")
+    st.pyplot(fig4)
+
+    st.subheader("📊 Extracted Skill Frequency")
+    skill_counts = Counter(skills)
+    fig5, ax5 = plt.subplots(figsize=(4, 3))
+    ax5.bar(skill_counts.keys(), skill_counts.values(), color="#ff6600")
+    ax5.set_ylabel("Frequency")
+    ax5.set_title("Skills Extracted from Resume")
+    ax5.set_xticklabels(skill_counts.keys(), rotation=30)
+    st.pyplot(fig5)
+else:
+    st.info("ℹ️ Matching data not available to generate visualizations.")
+
 
 # ---------- Download ----------
 csv = matched_df.to_csv(index=False).encode('utf-8')
