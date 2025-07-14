@@ -185,8 +185,12 @@ uploaded_resume = st.file_uploader("", type=["pdf"])
 st.markdown('<span class="upload-label">📊 Upload Job Dataset (CSV)</span>', unsafe_allow_html=True)
 uploaded_jobs = st.file_uploader("", type=["csv"])
 
-st.markdown('<span class="checkbox-label">Use OpenAI API (disable for offline demo)</span>', unsafe_allow_html=True)
-use_openai = st.checkbox("", value=True)
+use_openai = st.checkbox(
+    "🧠 Use OpenAI API (uncheck for offline demo)",
+    value=True,
+    help="Uncheck this if you don't want to use GPT summary or skill extraction."
+)
+
 
 # ---------- Resume Analysis ----------
 resume_text = summary = ""
@@ -215,78 +219,87 @@ if analysis_done and resume_text:
     st.markdown('<a name="insights"></a>', unsafe_allow_html=True)
     st.subheader("📄 AI Resume Insights")
 
-    try:
-        with st.spinner("🧠 Generating AI summary..."):
-            summary = generate_resume_summary(resume_text) if use_openai else "Sample summary: Strong Python, ML, and data science skills."
-        st.markdown(f'<div class="custom-skill-box">{summary}</div>', unsafe_allow_html=True)
-    except OpenAIError as e:
-        st.error(f"❌ Failed to generate summary: {str(e)}")
+with st.spinner("🧠 Generating AI summary..."):
+    if use_openai:
+        try:
+            summary = generate_resume_summary(resume_text)
+        except OpenAIError as e:
+            summary = f"❌ Failed to generate summary: {str(e)}"
+    else:
+        summary = "📝 Sample summary: Strong Python, ML, and data science skills."
 
-    try:
-        with st.spinner("🛠️ Extracting skills..."):
-            skills = extract_skills_from_resume(resume_text) if use_openai else ["Python", "Data Analysis", "Machine Learning"]
-        st.markdown(f'<div class="custom-skill-box">{', '.join(skills)}</div>', unsafe_allow_html=True)
-    except OpenAIError as e:
-        st.error(f"❌ Failed to extract skills: {str(e)}")
+st.markdown(f'<div class="custom-skill-box">{summary}</div>', unsafe_allow_html=True)
 
-    st.markdown('<a name="matches"></a>', unsafe_allow_html=True)
-    st.subheader("💼 Top Matching Jobs")
-    for index, row in matched_df.head(5).iterrows():
-        st.markdown(f"### 🔹 {row['Job Title']} ({row['Match (%)']}%)")
-        st.write(row['Details'])
+with st.spinner("🛠️ Extracting skills..."):
+    if use_openai:
+        try:
+            skills = extract_skills_from_resume(resume_text)
+        except OpenAIError as e:
+            skills = [f"❌ Failed to extract skills: {str(e)}"]
+    else:
+        skills = ["Python", "Data Analysis", "Machine Learning"]
 
-        if use_openai:
-            with st.expander("🤖 AI Feedback: Am I a Good Fit?"):
-                try:
-                    feedback = evaluate_job_fit(resume_text, row['Details'])
-                    st.write(feedback)
-                except OpenAIError as e:
-                    st.error(f"❌ Fit evaluation failed: {str(e)}")
+st.markdown(f'<div class="custom-skill-box">{", ".join(skills)}</div>', unsafe_allow_html=True)
 
-    # ---------- Visualizations ----------
-    st.subheader("📊 Match Score Visualization")
-    top_jobs = matched_df.sort_values(by="Match (%)", ascending=False).head(5)
-    fig, ax = plt.subplots(figsize=(2, 2))
-    ax.barh(top_jobs["Job Title"], top_jobs["Match (%)"], color="#0072b1")
-    ax.set_xlabel("Match Percentage")
-    ax.set_title("Top 5 Matching Job Roles")
-    ax.invert_yaxis()
-    st.pyplot(fig)
 
-    st.subheader("📈 Match Score Distribution")
-    fig2, ax2 = plt.subplots(figsize=(2, 2))
-    ax2.hist(matched_df["Match (%)"], bins=10, color="#005999", edgecolor='black')
-    ax2.set_xlabel("Match %")
-    ax2.set_ylabel("Number of Jobs")
-    ax2.set_title("Distribution of Match Scores")
-    st.pyplot(fig2)
+st.markdown('<a name="matches"></a>', unsafe_allow_html=True)
+st.subheader("💼 Top Matching Jobs")
+for index, row in matched_df.head(5).iterrows():
+    st.markdown(f"### 🔹 {row['Job Title']} ({row['Match (%)']}%)")
+    st.write(row['Details'])
 
-    st.subheader("📌 Match Share by Job Title")
-    fig3, ax3 = plt.subplots(figsize=(2, 2))
-    ax3.pie(top_jobs["Match (%)"], labels=top_jobs["Job Title"], autopct="%1.1f%%", startangle=140, colors=plt.cm.Paired.colors)
-    ax3.axis('equal')
-    st.pyplot(fig3)
+    if use_openai:
+        with st.expander("🤖 AI Feedback: Am I a Good Fit?"):
+            try:
+                feedback = evaluate_job_fit(resume_text, row['Details'])
+                st.write(feedback)
+            except OpenAIError as e:
+                st.error(f"❌ Fit evaluation failed: {str(e)}")
 
-    st.subheader("🔤 Word Cloud of Job Descriptions")
-    all_descriptions = " ".join(matched_df["Details"].astype(str).tolist())
-    wordcloud = WordCloud(width=400, height=400, background_color="white").generate(all_descriptions)
-    fig4, ax4 = plt.subplots(figsize=(2, 2))
-    ax4.imshow(wordcloud, interpolation='bilinear')
-    ax4.axis("off")
-    st.pyplot(fig4)
+# ---------- Visualizations ----------
+st.subheader("📊 Match Score Visualization")
+top_jobs = matched_df.sort_values(by="Match (%)", ascending=False).head(5)
+fig, ax = plt.subplots(figsize=(2, 2))
+ax.barh(top_jobs["Job Title"], top_jobs["Match (%)"], color="#0072b1")
+ax.set_xlabel("Match Percentage")
+ax.set_title("Top 5 Matching Job Roles")
+ax.invert_yaxis()
+st.pyplot(fig)
 
-    st.subheader("📊 Extracted Skill Frequency")
-    skill_counts = Counter(skills)
-    fig5, ax5 = plt.subplots(figsize=(2, 2))
-    ax5.bar(skill_counts.keys(), skill_counts.values(), color="#ff6600")
-    ax5.set_ylabel("Frequency")
-    ax5.set_title("Skills Extracted from Resume")
-    ax5.set_xticklabels(skill_counts.keys(), rotation=30)
-    st.pyplot(fig5)
+st.subheader("📈 Match Score Distribution")
+fig2, ax2 = plt.subplots(figsize=(2, 2))
+ax2.hist(matched_df["Match (%)"], bins=10, color="#005999", edgecolor='black')
+ax2.set_xlabel("Match %")
+ax2.set_ylabel("Number of Jobs")
+ax2.set_title("Distribution of Match Scores")
+st.pyplot(fig2)
 
-    # ---------- Download ----------
-    csv = matched_df.to_csv(index=False).encode('utf-8')
-    st.download_button("📥 Download Full Match Report", data=csv, file_name="match_results.csv", mime="text/csv")
+st.subheader("📌 Match Share by Job Title")
+fig3, ax3 = plt.subplots(figsize=(2, 2))
+ax3.pie(top_jobs["Match (%)"], labels=top_jobs["Job Title"], autopct="%1.1f%%", startangle=140, colors=plt.cm.Paired.colors)
+ax3.axis('equal')
+st.pyplot(fig3)
+
+st.subheader("🔤 Word Cloud of Job Descriptions")
+all_descriptions = " ".join(matched_df["Details"].astype(str).tolist())
+wordcloud = WordCloud(width=400, height=400, background_color="white").generate(all_descriptions)
+fig4, ax4 = plt.subplots(figsize=(2, 2))
+ax4.imshow(wordcloud, interpolation='bilinear')
+ax4.axis("off")
+st.pyplot(fig4)
+
+st.subheader("📊 Extracted Skill Frequency")
+skill_counts = Counter(skills)
+fig5, ax5 = plt.subplots(figsize=(2, 2))
+ax5.bar(skill_counts.keys(), skill_counts.values(), color="#ff6600")
+ax5.set_ylabel("Frequency")
+ax5.set_title("Skills Extracted from Resume")
+ax5.set_xticklabels(skill_counts.keys(), rotation=30)
+st.pyplot(fig5)
+
+# ---------- Download ----------
+csv = matched_df.to_csv(index=False).encode('utf-8')
+st.download_button("📥 Download Full Match Report", data=csv, file_name="match_results.csv", mime="text/csv")
 
 # ---------- Footer ----------
 st.markdown("""
