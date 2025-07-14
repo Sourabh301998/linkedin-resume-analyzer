@@ -4,8 +4,8 @@ __pycache__/
 *.pyc
 
 # Ignore temporary files
-resume/
-data/
+#resume/
+#data/
 
 # Ignore system/IDE files
 .DS_Store
