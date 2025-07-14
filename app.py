@@ -249,7 +249,7 @@ if analysis_done and resume_text:
         else:
             summary = "📝 Sample summary: Strong Python, ML, and data science skills."
 
-    if summary:
+if summary:
     st.markdown(f'<div class="custom-skill-box">{summary}</div>', unsafe_allow_html=True)
     
     
