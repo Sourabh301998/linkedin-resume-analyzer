@@ -232,13 +232,27 @@ if uploaded_resume and uploaded_jobs:
         analysis_done = True
 
 if analysis_done:
-    st.success("✅ Resume analysis complete!")
+    st.markdown("""
+    <div style='
+        background-color: #dff0d8;
+        color: #003366;
+        padding: 15px 20px;
+        border-radius: 8px;
+        font-family: "Montserrat", sans-serif;
+        font-weight: 600;
+        font-size: 16px;
+        margin-bottom: 20px;
+        border: 1px solid #c3e6cb;
+    '>
+    ✅ Resume analysis complete!
+    </div>
+    """, unsafe_allow_html=True)
 else:
     st.markdown("""
-<div style="background-color:#fff3cd; padding: 15px; border-left: 6px solid #ffecb5; border-radius: 6px; color: #856404; font-family: 'Montserrat', sans-serif;">
-⚠️ <strong>Please upload both a resume and a job dataset to start the analysis.</strong>
-</div>
-""", unsafe_allow_html=True)
+    <div style="background-color:#fff3cd; padding: 15px; border-left: 6px solid #ffecb5; border-radius: 6px; color: #856404; font-family: 'Montserrat', sans-serif;">
+    ⚠️ <strong>Please upload both a resume and a job dataset to start the analysis.</strong>
+    </div>
+    """, unsafe_allow_html=True)
 
 
 # ---------- Insights ----------
