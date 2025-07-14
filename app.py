@@ -127,6 +127,12 @@ div.stDownloadButton > button:hover {
     color: #00BFFF;
     text-decoration: underline;
 }
+.stAlert-success {
+    color: #003366 !important;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    margin-bottom: 1.5rem;                      
+}
 </style>
 """, unsafe_allow_html=True)
 
