@@ -67,7 +67,7 @@ body, .stApp {
 .upload-label, .checkbox-label {
     font-size: 18px;
     font-weight: 600;
-    color: #003366;
+    color: black !important;  /* ✅ Fixes the visibility */
     font-family: 'Montserrat', sans-serif;
     margin-bottom: 8px;
     display: block;
@@ -120,6 +120,9 @@ footer {visibility: hidden;}
 .custom-footer a:hover {
     color: #00BFFF;
     text-decoration: underline;
+}
+.stCheckbox > div, .stMarkdown, .stSpinner {
+    color: #003366 !important;                      
 }
 </style>
 <div class="topnav">
@@ -185,11 +188,9 @@ uploaded_resume = st.file_uploader("", type=["pdf"])
 st.markdown('<span class="upload-label">📊 Upload Job Dataset (CSV)</span>', unsafe_allow_html=True)
 uploaded_jobs = st.file_uploader("", type=["csv"])
 
-use_openai = st.checkbox(
-    "🧠 Use OpenAI API (uncheck for offline demo)",
-    value=True,
-    help="Uncheck this if you don't want to use GPT summary or skill extraction."
-)
+st.markdown('<span class="checkbox-label">🧠 Use OpenAI API (uncheck for offline demo)</span>', unsafe_allow_html=True)
+use_openai = st.checkbox("", value=True)
+
 
 
 # ---------- Resume Analysis ----------
@@ -219,29 +220,29 @@ if analysis_done and resume_text:
     st.markdown('<a name="insights"></a>', unsafe_allow_html=True)
     st.subheader("📄 AI Resume Insights")
 
-with st.spinner("🧠 Generating AI summary..."):
-    if use_openai:
-        try:
-            summary = generate_resume_summary(resume_text)
-        except OpenAIError as e:
-            summary = f"❌ Failed to generate summary: {str(e)}"
-    else:
-        summary = "📝 Sample summary: Strong Python, ML, and data science skills."
+    with st.spinner("🧠 Generating AI summary..."):
+        if use_openai:
+            try:
+                summary = generate_resume_summary(resume_text)
+            except OpenAIError as e:
+                summary = f"❌ Failed to generate summary: {str(e)}"
+        else:
+            summary = "📝 Sample summary: Strong Python, ML, and data science skills."
 
-st.markdown(f'<div class="custom-skill-box">{summary}</div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="custom-skill-box">{summary}</div>', unsafe_allow_html=True)
 
-with st.spinner("🛠️ Extracting skills..."):
-    if use_openai:
-        try:
-            skills = extract_skills_from_resume(resume_text)
-        except OpenAIError as e:
-            skills = [f"❌ Failed to extract skills: {str(e)}"]
-    else:
-        skills = ["Python", "Data Analysis", "Machine Learning"]
+    with st.spinner("🛠️ Extracting skills..."):
+        if use_openai:
+            try:
+               skills = extract_skills_from_resume(resume_text)
+            except OpenAIError as e:
+               skills = [f"❌ Failed to extract skills: {str(e)}"]
+        else:
+            skills = ["Python", "Data Analysis", "Machine Learning"]
 
 st.markdown(f'<div class="custom-skill-box">{", ".join(skills)}</div>', unsafe_allow_html=True)
 
-
+# ---------- Job Matches ----------
 st.markdown('<a name="matches"></a>', unsafe_allow_html=True)
 st.subheader("💼 Top Matching Jobs")
 for index, row in matched_df.head(5).iterrows():
