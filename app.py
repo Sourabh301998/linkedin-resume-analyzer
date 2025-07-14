@@ -20,7 +20,7 @@ st.markdown("""
 <style>
 body, .stApp {
     background-color: white !important;
-    color: black !important;
+    color: #003366 !important;
 }
 .block-container {
     background-color: white !important;
@@ -67,14 +67,23 @@ body, .stApp {
 .upload-label, .checkbox-label {
     font-size: 18px;
     font-weight: 600;
-    color: black !important;  /* ✅ Fixes the visibility */
+    color: #003366 !important;
     font-family: 'Montserrat', sans-serif;
     margin-bottom: 8px;
     display: block;
 }
-.stAlert > div, .stSpinner, .stMarkdown, .css-1v0mbdj p, .css-1v0mbdj span {
-    color: black !important;
+
+/* ✅ FIX invisible default markdown/text */
+.stMarkdown, .stText, .stTextLabel, .stSubheader, .css-1v0mbdj, .css-10trblm {
+    color: #003366 !important;
 }
+
+/* ✅ FIX checkbox text */
+.stCheckbox > div, .checkbox-label {
+    color: #003366 !important;
+}
+
+/* ✅ Download Button */
 div.stDownloadButton > button {
     background-color: #0072b1;
     color: white;
@@ -87,6 +96,8 @@ div.stDownloadButton > button {
 div.stDownloadButton > button:hover {
     background-color: #005999;
 }
+
+/* ✅ Skill box styling */
 .custom-skill-box {
     background-color: #f1f5f9;
     padding: 15px;
@@ -96,6 +107,8 @@ div.stDownloadButton > button:hover {
     font-family: 'Montserrat', sans-serif;
     color: #003366;
 }
+
+/* ✅ Footer */
 footer {visibility: hidden;}
 .custom-footer {
     position: relative;
@@ -121,24 +134,9 @@ footer {visibility: hidden;}
     color: #00BFFF;
     text-decoration: underline;
 }
-.stCheckbox > div, .stMarkdown, .stSpinner {
-    color: #003366 !important;                      
-}
 </style>
-<div class="topnav">
-  <a href="#upload">Upload</a>
-  <a href="#insights">Insights</a>
-  <a href="#matches">Top Matches</a>
-  <a href="https://github.com/Sourabh301998" target="_blank">GitHub</a>
-</div>
 """, unsafe_allow_html=True)
 
-# ---------- Header ----------
-st.markdown("""
-<div class="header-container">
-    <h1 class="glow-title">LinkedIn Resume Analyzer</h1>
-</div>
-""", unsafe_allow_html=True)
 
 # ---------- Lottie ----------
 def load_lottie_url(url):
