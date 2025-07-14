@@ -35,27 +35,35 @@ h1, h2, h3, h4, h5 {
     padding: 2rem 1rem;
 }
 
-/* Top Navigation */
+/* Top Navigation - Responsive Fix */
 .topnav {
+    display: flex;
+    flex-wrap: wrap;             /* ✅ Wraps items to next line if space is less */
+    justify-content: center;     /* ✅ Center aligned */
+    background-color: #003366;
+    padding: 10px 0;
     position: fixed;
     top: 0;
     width: 100%;
-    background-color: #003366;
-    overflow: hidden;
     z-index: 9999;
 }
+
 .topnav a {
-    float: left;
-    display: block;
     color: white;
     text-align: center;
-    padding: 14px 24px;
+    padding: 12px 20px;
     text-decoration: none;
     font-size: 16px;
     font-family: 'Montserrat', sans-serif;
 }
+
 .topnav a:hover {
     background-color: #005999;
+}
+@media (max-width: 768px) {
+    .topnav a {
+        font-size: 14px;
+        padding: 10px 14px;                        
 }
 
 /* Download Button */
