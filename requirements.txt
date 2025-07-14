@@ -6,3 +6,4 @@ requests
 python-dotenv
 PyPDF2
 streamlit-lottie
+wordcloud
