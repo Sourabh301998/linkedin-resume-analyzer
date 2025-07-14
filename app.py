@@ -134,8 +134,15 @@ footer {visibility: hidden;}
     color: #00BFFF;
     text-decoration: underline;
 }
+
+/* Chart Title Fix */
+.stMarkdown h3, .stMarkdown h2, .stMarkdown h4 {
+    color: #003366 !important;
+    font-family: 'Montserrat', sans-serif;
+}
 </style>
 """, unsafe_allow_html=True)
+
 
 
 # ---------- Lottie ----------
