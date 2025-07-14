@@ -86,6 +86,7 @@ div.stDownloadButton > button:hover {
     padding: 15px;
     border-radius: 10px;
     border: 1px solid #d0d7de;
+    margin-top: 30px;         
     margin-bottom: 20px;
     font-family: 'Montserrat', sans-serif;
     color: #003366;
@@ -248,7 +249,10 @@ if analysis_done and resume_text:
         else:
             summary = "📝 Sample summary: Strong Python, ML, and data science skills."
 
+    if summary:
     st.markdown(f'<div class="custom-skill-box">{summary}</div>', unsafe_allow_html=True)
+    
+    
 
     with st.spinner("🛠️ Extracting skills..."):
         if use_openai:
@@ -259,7 +263,8 @@ if analysis_done and resume_text:
         else:
             skills = ["Python", "Data Analysis", "Machine Learning"]
 
-st.markdown(f'<div class="custom-skill-box">{", ".join(skills)}</div>', unsafe_allow_html=True)
+if skills:
+    st.markdown(f'<div class="custom-skill-box">{", ".join(skills)}</div>', unsafe_allow_html=True)
 
 # ---------- Job Matches ----------
 st.markdown('<a name="matches"></a>', unsafe_allow_html=True)
