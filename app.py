@@ -395,6 +395,7 @@ st.markdown("""
     © 2025 <strong>Sourabh Ranbhise</strong> · AI Resume Analyzer · 
     <a href="https://www.linkedin.com/in/sourabh-ranbhise-67a4ba257/" target="_blank">LinkedIn</a> |
     <a href="https://github.com/Sourabh301998" target="_blank">GitHub</a> ·
+    <a href="mailto:sourabhranbhise301998@gmail.com" target="_blank">Contact</a> ·
     Powered by <strong>OpenAI GPT</strong>
 </div>
 """, unsafe_allow_html=True)
