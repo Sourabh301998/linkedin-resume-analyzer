@@ -116,10 +116,72 @@ div.stDownloadButton > button:hover {
 
 # ---------- Header ----------
 st.markdown("""
-<div class="header-container">
-    <h1 class="glow-title">LinkedIn Resume Analyzer</h1>
+<style>
+.content {
+    text-align: center;
+    margin-top: 40px;
+    margin-bottom: 30px;
+    position: relative;
+}
+
+.title {
+    font-size: 50px;
+    font-weight: bold;
+    color: white;
+    z-index: 2;
+    position: relative;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+}
+
+.aurora {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    gap: 20px;
+    z-index: 1;
+}
+
+.aurora_item {
+    width: 120px;
+    height: 120px;
+    background: radial-gradient(circle, rgba(0, 255, 255, 0.3), transparent 70%);
+    border-radius: 50%;
+    filter: blur(30px);
+    animation: float 6s ease-in-out infinite alternate;
+}
+
+.aurora_item:nth-child(2) {
+    animation-delay: 1.5s;
+    background: radial-gradient(circle, rgba(255, 0, 255, 0.3), transparent 70%);
+}
+.aurora_item:nth-child(3) {
+    animation-delay: 3s;
+    background: radial-gradient(circle, rgba(0, 255, 127, 0.3), transparent 70%);
+}
+.aurora_item:nth-child(4) {
+    animation-delay: 4.5s;
+    background: radial-gradient(circle, rgba(255, 255, 0, 0.3), transparent 70%);
+}
+
+@keyframes float {
+    0% { transform: translateY(0) scale(1); }
+    100% { transform: translateY(-30px) scale(1.1); }
+}
+</style>
+
+<div class="content">
+    <h1 class="title">LinkedIn Resume Analyzer</h1>
+    <div class="aurora">
+        <div class="aurora_item"></div>
+        <div class="aurora_item"></div>
+        <div class="aurora_item"></div>
+        <div class="aurora_item"></div>
+    </div>
 </div>
 """, unsafe_allow_html=True)
+
 
 
 # ---------- Header Image ----------
