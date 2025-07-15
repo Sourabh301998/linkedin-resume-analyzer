@@ -1,19 +1,27 @@
-# 📄 LinkedIn Resume Analyzer with OpenAI GPT
+# 💼 LinkedIn Resume Analyzer
 
-A powerful AI-powered Streamlit web app that analyzes your resume against job descriptions using GPT.  
-Get summaries, extracted skills, match scores, and job-fit insights — all in a clean UI with animations and visualizations.
+An intelligent AI-powered tool that analyzes your resume against job descriptions and provides skill insights, match scores, and personalized AI feedback using OpenAI GPT.
 
----
+![Banner](assets/header_image.png)
 
 ## 🚀 Features
 
-- 📄 Upload your **Resume (PDF)** and **Job Dataset (CSV)**
-- 🤖 Generate **AI-powered resume summary**
-- 🛠️ Extract **technical and soft skills**
-- 💼 View **Top Matching Jobs** with % match score
-- 🧠 GPT-powered **"Am I a Good Fit?"** evaluation
-- 📈 Integrated **charts & visualizations**
-- 🎨 Professional UI with tabs, icons, and Lottie animations
+- 📄 Resume PDF Upload
+- 📊 Job Dataset CSV Upload
+- 🧠 GPT-powered Summary & Skill Extraction
+- 🎯 Job Matching & Fit Evaluation
+- 📈 Visualizations (Bar, Histogram, Pie, WordCloud)
+- 🌈 Aurora Floating Text Effect
+- 🧪 Optional Offline Mode (no OpenAI usage)
+- 📥 Downloadable Match Report
+
+## 🔧 Tech Stack
+
+- `Streamlit`
+- `Python (pandas, matplotlib, wordcloud)`
+- `OpenAI GPT`
+- `Lottie Animations`
+- `Custom CSS Styling`
 
 ---
 
@@ -121,6 +129,6 @@ Sourabh Ranbhise
 ----------
 
 ##📜 License
-MIT License – feel free to use and modify.
+MIT © Sourabh Ranbhise
 
 -------------
