@@ -135,7 +135,8 @@ def load_lottie_url(url):
         return None
     return r.json()
 
-lottie_url = "https://assets3.lottiefiles.com/packages/lf20_4kx2q32n.json"
+lottie_url = "https://lottie.host/21cfe4c8-02b5-407d-bf6d-f53a9f5958b0/MHBrXmKXuV.json"
+
 lottie_resume = load_lottie_url(lottie_url)
 
 st.markdown("""

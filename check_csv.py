@@ -11,5 +11,4 @@ print(df.columns)
 print("\nFirst few rows of data:")
 print(df.head())
 
-Columns in the CSV:
-Index(['title', 'company', 'details', 'location'], dtype='object')
+
